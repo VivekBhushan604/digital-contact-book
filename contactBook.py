@@ -1,12 +1,23 @@
+import json
+
 contacts = {}
 
+try:
+    with open("contacts.json", "r") as file:
+        contacts = json.load(file)
+except FileNotFoundError:
+    contacts = {}
+
+def save_contacts():
+    with open("contacts.json", "w") as file:
+        json.dump(contacts, file, indent=4)
 
 def add_contact():
     name = input("Enter name: ")
     phone = input("Enter phone number: ")
 
     contacts[name] = phone
-
+    save_contacts()
     print("Contact added.")
 
 
@@ -26,6 +37,7 @@ def update_contact():
     if name in contacts:
         new_phone = input("Enter new phone number: ")
         contacts[name] = new_phone
+        save_contacts()
         print("Contact updated.")
     else:
         print("Contact not found.")
@@ -36,17 +48,20 @@ def delete_contact():
 
     if name in contacts:
         del contacts[name]
+        save_contacts()
         print("Contact deleted.")
     else:
         print("Contact not found.")
 
 def search_contact():
-    name = input("Enter contact name: ")
+    search_name = input("Enter contact name: ").lower()
 
-    if name in contacts:
-        print(f"{name}: {contacts[name]}")
-    else:
-        print("Contact not found.")
+    for name, phone in contacts.items():
+        if name.lower() == search_name:
+            print(f"{name}: {phone}")
+            return
+
+    print("Contact not found.")
 
 
 while True:
