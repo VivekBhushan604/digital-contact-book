@@ -40,6 +40,14 @@ def delete_contact():
     else:
         print("Contact not found.")
 
+def search_contact():
+    name = input("Enter contact name: ")
+
+    if name in contacts:
+        print(f"{name}: {contacts[name]}")
+    else:
+        print("Contact not found.")
+
 
 while True:
     print("\n===== Contact Book =====")
@@ -47,7 +55,8 @@ while True:
     print("2. View Contacts")
     print("3. Update Contact")
     print("4. Delete Contact")
-    print("5. Exit")
+    print("5. Search Contact")
+    print("6. Exit")
 
     choice = input("Enter choice: ")
     print("")
@@ -65,6 +74,9 @@ while True:
         delete_contact()
 
     elif choice == "5":
+        search_contact()
+    
+    elif choice == "6":
         print("Goodbye!")
         break
 
